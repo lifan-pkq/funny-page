@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大佬登场 👍</title>
+    <title>🔥 大佬降临 🔥</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff006e 0%, #8338ec 50%, #3a86ff 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -21,23 +21,53 @@
             font-family: 'Microsoft YaHei', sans-serif;
             overflow-x: hidden;
             position: relative;
+            animation: bgFlash 2s infinite;
+        }
+        
+        /* 背景闪电效果 */
+        @keyframes bgFlash {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+            75% { filter: brightness(0.8); }
+        }
+        
+        /* 闪电覆盖层 */
+        .lightning {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0);
+            pointer-events: none;
+            z-index: 5;
+            animation: lightning 3s infinite;
+        }
+        
+        @keyframes lightning {
+            0%, 90%, 100% { background: rgba(255,255,255,0); }
+            92% { background: rgba(255,255,255,0.8); }
+            94% { background: rgba(255,255,255,0); }
+            96% { background: rgba(255,255,255,0.5); }
         }
         
         /* 漂浮的背景粒子 */
         .particle {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background: rgba(255,255,255,0.3);
+            width: 15px;
+            height: 15px;
+            background: rgba(255,255,255,0.5);
             border-radius: 50%;
-            animation: float 6s infinite ease-in-out;
+            animation: float 4s infinite ease-in-out;
+            box-shadow: 0 0 20px rgba(255,255,255,0.8);
         }
         
         @keyframes float {
-            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            0%, 100% { transform: translateY(100vh) rotate(0deg) scale(1); opacity: 0; }
             10% { opacity: 1; }
+            50% { transform: translateY(50vh) rotate(360deg) scale(1.5); }
             90% { opacity: 1; }
-            100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+            100% { transform: translateY(-100px) rotate(720deg) scale(0.5); opacity: 0; }
         }
         
         .container {
@@ -46,37 +76,77 @@
             padding: 20px;
         }
         
+        /* 鬼畜抖动标题 */
         h1 {
-            color: #fff;
-            font-size: 3rem;
+            font-size: 4rem;
             margin-bottom: 10px;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
-            animation: bounce 2s infinite;
+            text-shadow: 4px 4px 0 #ff006e, 8px 8px 0 #8338ec, 12px 12px 0 #3a86ff;
+            animation: crazyShake 0.5s infinite, rainbowText 1s infinite;
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 400%;
         }
         
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        @keyframes crazyShake {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-3px, 3px) rotate(-2deg); }
+            50% { transform: translate(3px, -3px) rotate(2deg); }
+            75% { transform: translate(-3px, -3px) rotate(-1deg); }
+            100% { transform: translate(3px, 3px) rotate(1deg); }
+        }
+        
+        @keyframes rainbowText {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 400% 50%; }
         }
         
         .subtitle {
-            color: rgba(255,255,255,0.9);
-            font-size: 1.2rem;
+            color: #fff;
+            font-size: 1.5rem;
             margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: pulse 1s infinite;
         }
         
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        /* 照片框 - 鬼畜版 */
         .photo-frame {
             position: relative;
             display: inline-block;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-            transition: transform 0.3s;
             cursor: pointer;
+            transition: all 0.1s;
+            animation: crazyBorder 0.5s infinite, glow 1s infinite alternate;
+        }
+        
+        @keyframes crazyBorder {
+            0% { border: 5px solid #ff0000; }
+            20% { border: 5px solid #ff7300; }
+            40% { border: 5px solid #fffb00; }
+            60% { border: 5px solid #48ff00; }
+            80% { border: 5px solid #00ffd5; }
+            100% { border: 5px solid #7a00ff; }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 20px #ff006e, 0 0 40px #8338ec, 0 0 60px #3a86ff; }
+            to { box-shadow: 0 0 40px #ff006e, 0 0 80px #8338ec, 0 0 120px #3a86ff; }
         }
         
         .photo-frame:hover {
-            transform: scale(1.05) rotate(2deg);
+            transform: scale(1.1) rotate(5deg);
+            filter: hue-rotate(90deg) saturate(2) contrast(1.2);
+        }
+        
+        .photo-frame.crazy {
+            animation: crazyShake 0.1s infinite, crazyBorder 0.2s infinite, glow 0.5s infinite alternate;
         }
         
         .photo-frame img {
@@ -84,21 +154,22 @@
             width: 90vw;
             height: auto;
             display: block;
+            filter: contrast(1.1) saturate(1.2);
         }
         
-        /* 彩虹边框效果 */
+        /* 彩虹边框效果 - 加速版 */
         .photo-frame::before {
             content: '';
             position: absolute;
-            top: -5px;
-            left: -5px;
-            right: -5px;
-            bottom: -5px;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
             background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
             background-size: 400%;
             z-index: -1;
-            border-radius: 25px;
-            animation: rainbow 3s linear infinite;
+            border-radius: 30px;
+            animation: rainbow 0.5s linear infinite;
         }
         
         @keyframes rainbow {
@@ -107,92 +178,126 @@
             100% { background-position: 0% 50%; }
         }
         
+        /* 表情雨 - 更大更疯狂 */
         .emoji-rain {
             position: fixed;
-            font-size: 2rem;
+            font-size: 3rem;
             pointer-events: none;
             animation: fall linear;
             z-index: 100;
+            text-shadow: 0 0 20px rgba(255,255,255,0.8);
         }
         
         @keyframes fall {
-            to { transform: translateY(100vh) rotate(360deg); }
+            to { transform: translateY(100vh) rotate(720deg) scale(0.5); }
+        }
+        
+        /* 爆炸粒子 */
+        .explosion {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 200;
         }
         
         .btn {
             margin-top: 30px;
-            padding: 15px 40px;
-            font-size: 1.2rem;
+            padding: 20px 50px;
+            font-size: 1.5rem;
             border: none;
             border-radius: 50px;
-            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(45deg, #ff006e 0%, #8338ec 50%, #3a86ff 100%);
             color: white;
             cursor: pointer;
-            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
-            transition: all 0.3s;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.8);
+            animation: btnPulse 0.5s infinite;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        @keyframes btnPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(255, 0, 110, 0.8); }
+            50% { transform: scale(1.1); box-shadow: 0 0 60px rgba(255, 0, 110, 1); }
         }
         
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.6);
-        }
-        
-        .btn:active {
-            transform: scale(0.95);
+            transform: scale(1.2);
+            box-shadow: 0 0 80px rgba(255, 0, 110, 1);
         }
         
         .stats {
             margin-top: 20px;
-            color: rgba(255,255,255,0.8);
-            font-size: 0.9rem;
+            color: #fff;
+            font-size: 1.2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
         
         .counter {
-            font-size: 2rem;
-            color: #fff;
+            font-size: 3rem;
+            color: #fffb00;
             font-weight: bold;
+            text-shadow: 0 0 20px #fffb00, 0 0 40px #ff7300;
+            animation: counterGlow 0.5s infinite alternate;
+        }
+        
+        @keyframes counterGlow {
+            from { text-shadow: 0 0 20px #fffb00, 0 0 40px #ff7300; }
+            to { text-shadow: 0 0 40px #fffb00, 0 0 80px #ff7300, 0 0 120px #ff006e; }
         }
         
         /* 点击特效 */
         .click-effect {
             position: absolute;
             pointer-events: none;
-            animation: clickPop 0.6s ease-out forwards;
+            animation: clickPop 0.3s ease-out forwards;
+            font-size: 4rem;
         }
         
         @keyframes clickPop {
-            0% { transform: scale(0); opacity: 1; }
-            100% { transform: scale(2); opacity: 0; }
+            0% { transform: scale(0) rotate(0deg); opacity: 1; }
+            50% { transform: scale(1.5) rotate(180deg); }
+            100% { transform: scale(2) rotate(360deg); opacity: 0; }
         }
         
         footer {
             margin-top: 40px;
-            color: rgba(255,255,255,0.6);
-            font-size: 0.8rem;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+            animation: fadeInOut 2s infinite;
+        }
+        
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
     </style>
 </head>
 <body>
+    <!-- 闪电效果 -->
+    <div class="lightning"></div>
+    
     <!-- 背景粒子 -->
     <div id="particles"></div>
     
     <div class="container">
-        <h1>👍 大佬登场</h1>
-        <p class="subtitle">点击照片，为大佬点赞！</p>
+        <h1>🔥 大佬降临 🔥</h1>
+        <p class="subtitle">⚡ 疯狂点击，释放能量！⚡</p>
         
         <div class="photo-frame" id="photoFrame">
             <img src="hero.jpg" alt="大佬">
         </div>
         
-        <button class="btn" id="praiseBtn">🙏 膜拜大佬</button>
+        <button class="btn" id="praiseBtn">💥 膜拜大佬 💥</button>
         
         <div class="stats">
-            <p>已被膜拜 <span class="counter" id="counter">0</span> 次</p>
+            <p>🔥 已被膜拜 <span class="counter" id="counter">0</span> 次 🔥</p>
         </div>
     </div>
     
     <footer>
-        <p>Made with ❤️ for fun</p>
+        <p>⚡ Made with 🔥 for Maximum Fun ⚡</p>
     </footer>
     
     <script>
@@ -200,39 +305,93 @@
         const counter = document.getElementById('counter');
         const photoFrame = document.getElementById('photoFrame');
         const praiseBtn = document.getElementById('praiseBtn');
-        const emojis = ['👍', '🔥', '💯', '👏', '🙌', '⭐', '💪', '🎉', '👑', '😎'];
+        const emojis = ['👍', '🔥', '💯', '👏', '🙌', '⭐', '💪', '🎉', '👑', '😎', '⚡', '💥', '🚀', '✨', '🌟'];
+        const colors = ['#ff0000', '#ff7300', '#fffb00', '#48ff00', '#00ffd5', '#002bff', '#7a00ff', '#ff00c8'];
         
         // 创建背景粒子
         function createParticles() {
             const container = document.getElementById('particles');
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 30; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 6 + 's';
-                particle.style.animationDuration = (4 + Math.random() * 4) + 's';
+                particle.style.animationDelay = Math.random() * 4 + 's';
+                particle.style.animationDuration = (2 + Math.random() * 3) + 's';
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
                 container.appendChild(particle);
             }
         }
         createParticles();
+        
+        // 爆炸特效
+        function createExplosion(x, y) {
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'explosion';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.boxShadow = `0 0 10px ${particle.style.background}`;
+                
+                const angle = (Math.PI * 2 * i) / 20;
+                const velocity = 100 + Math.random() * 200;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                
+                document.body.appendChild(particle);
+                
+                let posX = x;
+                let posY = y;
+                let opacity = 1;
+                
+                const animate = () => {
+                    posX += vx * 0.1;
+                    posY += vy * 0.1;
+                    opacity -= 0.02;
+                    
+                    particle.style.left = posX + 'px';
+                    particle.style.top = posY + 'px';
+                    particle.style.opacity = opacity;
+                    
+                    if (opacity > 0) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        particle.remove();
+                    }
+                };
+                requestAnimationFrame(animate);
+            }
+        }
         
         // 点赞功能
         function praise(x, y) {
             count++;
             counter.textContent = count;
             
-            // 创建表情雨
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    createEmoji(x || window.innerWidth/2, y || window.innerHeight/2);
-                }, i * 100);
+            // 触发疯狂抖动
+            photoFrame.classList.add('crazy');
+            setTimeout(() => photoFrame.classList.remove('crazy'), 500);
+            
+            // 创建爆炸特效
+            if (x && y) {
+                createExplosion(x, y);
             }
             
-            // 照片抖动效果
-            photoFrame.style.animation = 'none';
+            // 创建表情雨（更多更疯狂）
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    createEmoji(x || window.innerWidth/2, y || window.innerHeight/2);
+                }, i * 50);
+            }
+            
+            // 背景闪烁
+            document.body.style.animation = 'none';
             setTimeout(() => {
-                photoFrame.style.animation = 'bounce 0.5s';
+                document.body.style.animation = 'bgFlash 0.2s infinite';
             }, 10);
+            setTimeout(() => {
+                document.body.style.animation = 'bgFlash 2s infinite';
+            }, 1000);
         }
         
         // 创建飘落表情
@@ -240,42 +399,49 @@
             const emoji = document.createElement('div');
             emoji.className = 'emoji-rain';
             emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-            emoji.style.left = (x + (Math.random() - 0.5) * 200) + 'px';
+            emoji.style.left = (x + (Math.random() - 0.5) * 400) + 'px';
             emoji.style.top = y + 'px';
-            emoji.style.animationDuration = (1 + Math.random() * 2) + 's';
+            emoji.style.animationDuration = (0.5 + Math.random() * 1.5) + 's';
+            emoji.style.transform = `rotate(${Math.random() * 360}deg)`;
             document.body.appendChild(emoji);
             
-            setTimeout(() => emoji.remove(), 3000);
+            setTimeout(() => emoji.remove(), 2000);
         }
         
         // 点击照片
         photoFrame.addEventListener('click', (e) => {
             const rect = photoFrame.getBoundingClientRect();
-            praise(rect.left + rect.width/2, rect.top);
+            const centerX = rect.left + rect.width/2;
+            const centerY = rect.top + rect.height/2;
+            
+            praise(centerX, centerY);
             
             // 点击特效
             const effect = document.createElement('div');
             effect.className = 'click-effect';
-            effect.textContent = '❤️';
+            effect.textContent = ['💥', '⚡', '🔥', '✨'][Math.floor(Math.random() * 4)];
             effect.style.left = e.pageX + 'px';
             effect.style.top = e.pageY + 'px';
-            effect.style.fontSize = '3rem';
             document.body.appendChild(effect);
-            setTimeout(() => effect.remove(), 600);
+            setTimeout(() => effect.remove(), 300);
         });
         
         // 点击按钮
         praiseBtn.addEventListener('click', () => {
-            praise();
+            const rect = photoFrame.getBoundingClientRect();
+            praise(rect.left + rect.width/2, rect.top + rect.height/2);
         });
         
-        // 自动递增（假装有人也在点赞）
+        // 自动递增（更频繁）
         setInterval(() => {
-            if (Math.random() > 0.7) {
+            if (Math.random() > 0.5) {
                 count++;
                 counter.textContent = count;
+                if (Math.random() > 0.7) {
+                    createEmoji(window.innerWidth/2, window.innerHeight/2);
+                }
             }
-        }, 3000);
+        }, 2000);
         
         // 读取本地存储的计数
         const saved = localStorage.getItem('praiseCount');
@@ -288,6 +454,16 @@
         window.addEventListener('beforeunload', () => {
             localStorage.setItem('praiseCount', count);
         });
+        
+        // 随机触发闪电效果
+        setInterval(() => {
+            if (Math.random() > 0.8) {
+                document.body.style.filter = 'brightness(2)';
+                setTimeout(() => {
+                    document.body.style.filter = 'brightness(1)';
+                }, 100);
+            }
+        }, 5000);
     </script>
 </body>
 </html>
