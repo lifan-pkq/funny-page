@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大佬登场 👍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Microsoft YaHei', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 漂浮的背景粒子 */
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+        }
+        
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #fff;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .photo-frame {
+            position: relative;
+            display: inline-block;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .photo-frame:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+        
+        .photo-frame img {
+            max-width: 400px;
+            width: 90vw;
+            height: auto;
+            display: block;
+        }
+        
+        /* 彩虹边框效果 */
+        .photo-frame::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            background-size: 400%;
+            z-index: -1;
+            border-radius: 25px;
+            animation: rainbow 3s linear infinite;
+        }
+        
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .emoji-rain {
+            position: fixed;
+            font-size: 2rem;
+            pointer-events: none;
+            animation: fall linear;
+            z-index: 100;
+        }
+        
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+        
+        .btn {
+            margin-top: 30px;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.6);
+        }
+        
+        .btn:active {
+            transform: scale(0.95);
+        }
+        
+        .stats {
+            margin-top: 20px;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+        
+        .counter {
+            font-size: 2rem;
+            color: #fff;
+            font-weight: bold;
+        }
+        
+        /* 点击特效 */
+        .click-effect {
+            position: absolute;
+            pointer-events: none;
+            animation: clickPop 0.6s ease-out forwards;
+        }
+        
+        @keyframes clickPop {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        
+        footer {
+            margin-top: 40px;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景粒子 -->
+    <div id="particles"></div>
+    
+    <div class="container">
+        <h1>👍 大佬登场</h1>
+        <p class="subtitle">点击照片，为大佬点赞！</p>
+        
+        <div class="photo-frame" id="photoFrame">
+            <img src="hero.jpg" alt="大佬">
+        </div>
+        
+        <button class="btn" id="praiseBtn">🙏 膜拜大佬</button>
+        
+        <div class="stats">
+            <p>已被膜拜 <span class="counter" id="counter">0</span> 次</p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Made with ❤️ for fun</p>
+    </footer>
+    
+    <script>
+        let count = 0;
+        const counter = document.getElementById('counter');
+        const photoFrame = document.getElementById('photoFrame');
+        const praiseBtn = document.getElementById('praiseBtn');
+        const emojis = ['👍', '🔥', '💯', '👏', '🙌', '⭐', '💪', '🎉', '👑', '😎'];
+        
+        // 创建背景粒子
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (4 + Math.random() * 4) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+        
+        // 点赞功能
+        function praise(x, y) {
+            count++;
+            counter.textContent = count;
+            
+            // 创建表情雨
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    createEmoji(x || window.innerWidth/2, y || window.innerHeight/2);
+                }, i * 100);
+            }
+            
+            // 照片抖动效果
+            photoFrame.style.animation = 'none';
+            setTimeout(() => {
+                photoFrame.style.animation = 'bounce 0.5s';
+            }, 10);
+        }
+        
+        // 创建飘落表情
+        function createEmoji(x, y) {
+            const emoji = document.createElement('div');
+            emoji.className = 'emoji-rain';
+            emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.style.left = (x + (Math.random() - 0.5) * 200) + 'px';
+            emoji.style.top = y + 'px';
+            emoji.style.animationDuration = (1 + Math.random() * 2) + 's';
+            document.body.appendChild(emoji);
+            
+            setTimeout(() => emoji.remove(), 3000);
+        }
+        
+        // 点击照片
+        photoFrame.addEventListener('click', (e) => {
+            const rect = photoFrame.getBoundingClientRect();
+            praise(rect.left + rect.width/2, rect.top);
+            
+            // 点击特效
+            const effect = document.createElement('div');
+            effect.className = 'click-effect';
+            effect.textContent = '❤️';
+            effect.style.left = e.pageX + 'px';
+            effect.style.top = e.pageY + 'px';
+            effect.style.fontSize = '3rem';
+            document.body.appendChild(effect);
+            setTimeout(() => effect.remove(), 600);
+        });
+        
+        // 点击按钮
+        praiseBtn.addEventListener('click', () => {
+            praise();
+        });
+        
+        // 自动递增（假装有人也在点赞）
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                count++;
+                counter.textContent = count;
+            }
+        }, 3000);
+        
+        // 读取本地存储的计数
+        const saved = localStorage.getItem('praiseCount');
+        if (saved) {
+            count = parseInt(saved);
+            counter.textContent = count;
+        }
+        
+        // 保存计数
+        window.addEventListener('beforeunload', () => {
+            localStorage.setItem('praiseCount', count);
+        });
+    </script>
+</body>
+</html>
